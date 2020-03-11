@@ -1,2 +1,5 @@
 # knights-tour
-The task of finding the route of a chess knight passing through all squares of the board once.
+
+The knight's tour problem is an ancient puzzle whose goal is to find out how to construct a series of legal moves made by a knight so that it visits every square of a chessboard exactly once.
+
+
