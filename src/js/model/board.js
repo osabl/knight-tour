@@ -47,5 +47,15 @@ export default class ChessBoard {
     return this.table[y][x]
   }
 
-  isAllFilled ()
+  isAllFilled () {
+    for (const row of this.table) {
+      for (const cell of row) {
+        if (!cell.used) {
+          return false
+        }
+      }
+    }
+
+    return true
+  }
 }
