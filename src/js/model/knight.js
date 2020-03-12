@@ -1,7 +1,7 @@
 export default class Knight {
   constructor (board, x = 0, y = 0) {
-    this.x = x
-    this.y = y
+    this.x = 0
+    this.y = 0
     this.board = board
 
     if (board.width >= x && board.height >= y) {
@@ -23,11 +23,11 @@ export default class Knight {
   }
 
   move ({ x, y, description }) {
-    this.x += x
-    this.y += y
+    const newX = this.x += x
+    const newY = this.y += y
 
-    this.board.table[y][x].used = true
-    this.board.history.push({ x, y, description })
+    this.board.table[newY][newX].used = true
+    this.board.history.push({ x: newX, y: newY, description })
   }
 
   moveBack () {
@@ -35,9 +35,11 @@ export default class Knight {
 
     board.table[this.y][this.x].used = false
     board.history.pop()
-
-    const lastMove = board.history[board.history -1]
-    this.x = lastMove.x
-    this.y = lastMove.y
+    
+    if (board.history.length > 0) {
+      const lastMove = board.history[board.history.length -1]
+      this.x = lastMove.x
+      this.y = lastMove.y
+    }
   }
 }

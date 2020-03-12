@@ -2,7 +2,6 @@ export default class ChessBoard {
   constructor (width = 8, height = 8) {
     this.width = width
     this.height = height
-    this.area = this.width * this.height
     this.history = []
     this.table = []
 
@@ -28,12 +27,12 @@ export default class ChessBoard {
     const possibleMoves = []
 
     for (const key in movements) {
-      const x = cell.x + movements[key].x
-      const y = cell.y + movements[key].y
+      const newX = cell.x + movements[key].x
+      const newY = cell.y + movements[key].y
 
       try {
-        if (!this.table[y][x].used) {
-          possibleMoves.push(this.table[y][x])
+        if (!this.table[newY][newX].used) {
+          possibleMoves.push(movements[key])
         }
       } catch {
         continue
