@@ -23,7 +23,7 @@ export default class ChessBoard {
     }
   }
 
-  getPossibleMoves(movements, x, y) {
+  getPossibleMoves (movements, x, y) {
     const cell = this.getCell(x, y)
     const possibleMoves = []
 
@@ -43,7 +43,9 @@ export default class ChessBoard {
     return possibleMoves
   }
 
-  getCell(x, y) {
+  getCell (x, y) {
     return this.table[y][x]
   }
+
+  isAllFilled ()
 }
