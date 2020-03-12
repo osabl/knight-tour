@@ -40,6 +40,30 @@ class ChessBoard {
       this.table.push(row)
     }
   }
+
+  possibleMoves(movements, x, y) {
+    const cell = this.getCell(x, y)
+    let possible = 0
+
+    for (const key in movements) {
+      const x = cell.x + movements[key].x
+      const y = cell.y + movements[key].y
+
+      try {
+        if (!this.table[y][x].used) {
+          possible++
+        }
+      } catch {
+        continue
+      }
+    }
+
+    return possible
+  }
+
+  getCell(x, y) {
+    return this.table[y][x]
+  }
 }
 
 class Knight {
