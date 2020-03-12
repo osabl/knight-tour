@@ -29,4 +29,15 @@ export default class Knight {
     this.board.table[y][x].used = true
     this.board.history.push({ x, y, description })
   }
+
+  moveBack () {
+    const board = this.board
+
+    board.table[this.y][this.x].used = false
+    board.history.pop()
+
+    const lastMove = board.history[board.history -1]
+    this.x = lastMove.x
+    this.y = lastMove.y
+  }
 }
