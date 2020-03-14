@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
   <title>Document</title>
 </head>
+
 <body>
-  <script type="module" src="js/tour.js"></script>
+  <form class="create-board">
+    <div>
+      <h2>Chess Board</h2>
+      <label for="width">Width:</label>
+      <input type="number" name="board" id="width" value="8">
+      <label for="height">Height:</label>
+      <input type="number" name="board" id="height" value="8">
+    </div>
+
+    <div>
+      <h2>Start position of knight</h2>
+      <label for="startX">Start X:</label>
+      <input type="number" name="board" id="startX" value="1">
+      <label for="startY">Start Y:</label>
+      <input type="number" name="board" id="startY" value="1">
+    </div> 
+
+    <input type="submit" id="create-board" value="Find way">
+  </form>
+
+  <div class="app"></div>
+  
+  <script type="module" src="js/controller.js"></script>
 </body>
+
 </html>
