@@ -1,11 +1,26 @@
-import ChessBoard from '../model/board.js'
-import Knight from '../model/knight.js'
+import ChessBoard from './model/board.js'
+import Knight from './model/knight.js'
+import Board from './view.js'
 
+const boardForm = document.querySelector('.create-board')
+const createBtn = document.querySelector('#create-board')
 
-const board = new ChessBoard(8, 8)
-const knight = new Knight(board, 0, 1)
-findWay(knight)
-console.log(board.history)
+boardForm.addEventListener('submit', (event) => {
+  event.preventDefault()
+
+  const colums = boardForm.querySelector('#width').value
+  const rows = boardForm.querySelector('#height').value
+
+  const x = boardForm.querySelector('#startX').value
+  const y = boardForm.querySelector('#startY').value
+
+  const board = new Board('.app', { rows, colums })
+  const chessBoard = new ChessBoard(colums, rows)
+  const knight = new Knight(chessBoard, x - 1, y - 1)
+
+  findWay(knight)
+  board.showWay(chessBoard.way)
+})
 
 
 function findWay(knight) {
