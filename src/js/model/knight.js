@@ -1,11 +1,15 @@
 export default class Knight {
-  constructor (board, x = 0, y = 0) {
+  constructor (board, options = {
+    x: 0,
+    y: 0
+  }) {
     this.x = 0
     this.y = 0
     this.board = board
 
-    if (board.width >= x && board.height >= y) {
-      this.move({ x, y, description: 'start position' })
+    if (board.colums >= x && board.rows >= y) {
+      console.log(x, y)
+      this.move({ x: Number(x), y: Number(y), description: 'start position' })
     } else {
       throw new Error('The value of the coordinates went beyond the border of the board.')
     }
@@ -27,17 +31,17 @@ export default class Knight {
     const newY = this.y += y
 
     this.board.table[newY][newX].used = true
-    this.board.history.push({ x: newX, y: newY, description })
+    this.board.way.push({ x: newX, y: newY, description })
   }
 
   moveBack () {
     const board = this.board
 
     board.table[this.y][this.x].used = false
-    board.history.pop()
+    board.way.pop()
     
-    if (board.history.length > 0) {
-      const lastMove = board.history[board.history.length -1]
+    if (board.way.length > 0) {
+      const lastMove = board.way[board.way.length -1]
       this.x = lastMove.x
       this.y = lastMove.y
     }
