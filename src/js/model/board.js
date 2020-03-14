@@ -1,14 +1,14 @@
 export default class ChessBoard { 
-  constructor (width = 8, height = 8) {
-    this.width = width
-    this.height = height
-    this.history = []
+  constructor (options) {
+    this.colums = options.colums
+    this.rows = options.rows
+    this.way = []
     this.table = []
 
-    for (let y = 0; y < height; y++) {
+    for (let y = 0; y < this.rows; y++) {
       let row = []
 
-      for (let x = 0; x < width; x++) {
+      for (let x = 0; x < this.colums; x++) {
         const cell = {
           x,
           y,
