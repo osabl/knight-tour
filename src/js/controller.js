@@ -30,7 +30,10 @@ viewBoard.canvas.addEventListener('click', function start (event) {
     viewBoard.canvas.removeEventListener('click', start)
     input.width.disabled = true
     input.height.disabled = true
-    viewBoard.renderWay(chessBoard.way)
+    viewBoard.renderWay(chessBoard.way).then(() => {
+      input.width.disabled = false
+      input.height.disabled = false
+    })
   } else {
     alert('It`s impossible to find a way out of these coordinates')
   }
@@ -41,7 +44,7 @@ function changeSize (prop, value) {
     chessBoard.clearTable()
     chessBoard[prop] = input[value].value
     chessBoard.fillTable()
-    
+
     viewBoard.clearBoard()
     viewBoard[prop] = input[value].value
     viewBoard.renderBoard()
