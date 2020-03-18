@@ -1,22 +1,6 @@
-.cell {
-  width: 30px;
-  height: 30px;
-
-  font-size: 26px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.even {
-  background-color: #B58863;
-}
-
-.odd {
-  background-color: #F0D9B5;
-}
-
 .chessboard {
   border-spacing: 0;
-  width: 500px;
-  height: 500px;
+  width: 50vh;
+  height: 50vh;
+  margin: 50px 100px;
 }
