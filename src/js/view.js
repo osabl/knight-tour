@@ -2,8 +2,7 @@ export default class View {
   constructor (selector, options) {
     this.canvas = document.createElement('canvas')
     this.canvas.className = 'chessboard'
-    this.canvas.width = options.resolution
-    this.canvas.height = options.resolution
+    this.canvas.width = this.canvas.height = options.resolution
     this.colums = options.colums
     this.rows = options.rows
 
@@ -21,6 +20,11 @@ export default class View {
         ctx.fillRect(j * size, i * size, size, size)
       }
     }
+  }
+
+  clearBoard() {
+    const ctx = this.canvas.getContext('2d')
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
   renderWay (way) {

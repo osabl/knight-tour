@@ -5,6 +5,10 @@ export default class ChessBoard {
     this.way = []
     this.table = []
 
+    this.fillTable()
+  }
+
+  fillTable () {
     for (let y = 0; y < this.rows; y++) {
       const row = []
 
@@ -20,6 +24,10 @@ export default class ChessBoard {
 
       this.table.push(row)
     }
+  }
+
+  clearTable () {
+    this.table = []
   }
 
   getPossibleMoves (movements, x, y) {
