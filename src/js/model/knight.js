@@ -1,8 +1,5 @@
 export default class Knight {
-  constructor (board, options = {
-    x: 0,
-    y: 0
-  }) {
+  constructor (board, options) {
     this.x = 0
     this.y = 0
     this.board = board

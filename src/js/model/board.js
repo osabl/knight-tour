@@ -1,8 +1,5 @@
 export default class ChessBoard {
-  constructor (options = {
-    colums: 8,
-    rows: 8
-  }) {
+  constructor (options) {
     this.colums = options.colums
     this.rows = options.rows
     this.way = []
