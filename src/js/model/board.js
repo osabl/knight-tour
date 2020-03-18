@@ -1,4 +1,4 @@
-export default class ChessBoard { 
+export default class ChessBoard {
   constructor (options = {
     colums: 8,
     rows: 8
@@ -9,7 +9,7 @@ export default class ChessBoard {
     this.table = []
 
     for (let y = 0; y < this.rows; y++) {
-      let row = []
+      const row = []
 
       for (let x = 0; x < this.colums; x++) {
         const cell = {

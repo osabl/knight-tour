@@ -7,9 +7,8 @@ export default class Knight {
     this.y = 0
     this.board = board
 
-    if (board.colums >= x && board.rows >= y) {
-      console.log(x, y)
-      this.move({ x: Number(x), y: Number(y), description: 'start position' })
+    if (board.colums >= options.x && board.rows >= options.y) {
+      this.move({ x: Number(options.x), y: Number(options.y), description: 'start position' })
     } else {
       throw new Error('The value of the coordinates went beyond the border of the board.')
     }
