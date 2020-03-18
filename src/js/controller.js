@@ -1,29 +1,62 @@
 import ChessBoard from './model/board.js'
 import Knight from './model/knight.js'
-import Board from './view.js'
+import View from './view.js'
 
-const boardForm = document.querySelector('.create-board')
-const createBtn = document.querySelector('#create-board')
-
-boardForm.addEventListener('submit', (event) => {
-  event.preventDefault()
-
-  const colums = boardForm.querySelector('#width').value
-  const rows = boardForm.querySelector('#height').value
-
-  const x = boardForm.querySelector('#startX').value
-  const y = boardForm.querySelector('#startY').value
-
-  const board = new Board('.app', { rows, colums })
-  const chessBoard = new ChessBoard(colums, rows)
-  const knight = new Knight(chessBoard, x - 1, y - 1)
-
-  findWay(knight)
-  board.showWay(chessBoard.way)
+const input = {
+  width: document.querySelector('#width'),
+  height: document.querySelector('#height')
+}
+const viewBoard = new View('#app', { 
+  rows: input.height.value, 
+  colums: input.width.value, 
+  resolution: 1000 
+})
+const chessBoard = new ChessBoard({ 
+  rows: input.height.value, 
+  colums: input.width.value 
 })
 
+input.width.addEventListener('input', changeSize('colums', 'width'))
+input.height.addEventListener('input', changeSize('rows', 'height'))
 
-function findWay(knight) {
+viewBoard.canvas.addEventListener('click', function start (event) {
+  const coord = getCursorPosition(viewBoard.canvas, event)
+  const relativeCoord = viewBoard.getSelectedCell(coord.x, coord.y)
+  const knight = new Knight(chessBoard, relativeCoord)
+
+  findWay(knight)
+
+  if (chessBoard.way.length > 0) {
+    viewBoard.canvas.removeEventListener('click', start)
+    input.width.disabled = true
+    input.height.disabled = true
+    viewBoard.renderWay(chessBoard.way)
+  } else {
+    alert('It`s impossible to find a way out of these coordinates')
+  }
+})
+
+function changeSize (prop, value) {
+  return () => {
+    chessBoard.clearTable()
+    chessBoard[prop] = input[value].value
+    chessBoard.fillTable()
+    
+    viewBoard.clearBoard()
+    viewBoard[prop] = input[value].value
+    viewBoard.renderBoard()
+  }
+}
+
+function getCursorPosition(canvas, event) {
+  const rect = canvas.getBoundingClientRect()
+  const ratio = canvas.width / (rect.right - rect.left)
+  const x = (event.clientX - rect.left) * ratio
+  const y = (event.clientY - rect.top) * ratio
+  return { x, y }
+}
+
+function findWay (knight) {
   const movement = getOptimalMovement(knight)
 
   for (const move of movement) {
@@ -40,7 +73,7 @@ function findWay(knight) {
   }
 }
 
-function getOptimalMovement(knight) {
+function getOptimalMovement (knight) {
   let possibleMoves = knight.board.getPossibleMoves(Knight.movement, knight.x, knight.y)
 
   possibleMoves.sort((moveA, moveB) => {

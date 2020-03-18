@@ -13,23 +13,13 @@
     <div>
       <h2>Chess Board</h2>
       <label for="width">Width:</label>
-      <input type="number" name="board" id="width" value="8">
+      <input type="number" name="board" id="width" value="8" min="3" max="50">
       <label for="height">Height:</label>
-      <input type="number" name="board" id="height" value="8">
+      <input type="number" name="board" id="height" value="8" min="3" max="50">
     </div>
-
-    <div>
-      <h2>Start position of knight</h2>
-      <label for="startX">Start X:</label>
-      <input type="number" name="board" id="startX" value="1">
-      <label for="startY">Start Y:</label>
-      <input type="number" name="board" id="startY" value="1">
-    </div> 
-
-    <input type="submit" id="create-board" value="Find way">
   </form>
 
-  <div class="app"></div>
+  <div id="app"></div>
   
   <script type="module" src="js/controller.js"></script>
 </body>
