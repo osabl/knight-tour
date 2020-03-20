@@ -1,5 +1,5 @@
 export default class View {
-  constructor (selector, options) {
+  constructor (element, options) {
     this.canvas = document.createElement('canvas')
     this.canvas.className = 'chessboard'
     this.canvas.width = this.canvas.height = options.resolution
@@ -7,7 +7,7 @@ export default class View {
     this.rows = options.rows
 
     this.renderBoard()
-    document.querySelector(selector).append(this.canvas)
+    element.append(this.canvas)
   }
 
   renderBoard () {
