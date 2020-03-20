@@ -18,6 +18,12 @@ const chessBoard = new ChessBoard({
   colums: input.width.value
 })
 
+/* 
+  -------------
+    DOM Elements
+  -------------
+*/
+
 const status = document.createElement('div')
 const tryAgainBtn = document.createElement('button')
 tryAgainBtn.className = 'try-again'
@@ -38,10 +44,22 @@ tryAgainBtn.addEventListener('click', () => {
   tryAgainBtn.remove()
 })
 
+/* 
+  -------------
+    Listeners
+  -------------
+*/
+
 input.width.addEventListener('input', changeSize('colums', 'width'))
 input.height.addEventListener('input', changeSize('rows', 'height'))
 
 viewBoard.canvas.addEventListener('click', handlerStart)
+
+/* 
+  -------------
+    Handlers
+  -------------
+*/
 
 function changeSize(prop, value) {
   return () => {
@@ -55,13 +73,13 @@ function changeSize(prop, value) {
   }
 }
 
-function handlerStart (event) {
+function handlerStart(event) {
   const coord = getCursorPosition(viewBoard.canvas, event)
   const relativeCoord = viewBoard.getSelectedCell(coord.x, coord.y)
   const knight = new Knight(chessBoard, relativeCoord)
 
   viewBoard.canvas.removeEventListener('click', handlerStart)
-  
+
   input.width.disabled = true
   input.height.disabled = true
 
@@ -84,6 +102,12 @@ function handlerStart (event) {
     }
   })
 }
+
+/* 
+  -------------
+    Functions
+  -------------
+*/
 
 function getCursorPosition(canvas, event) {
   const rect = canvas.getBoundingClientRect()
