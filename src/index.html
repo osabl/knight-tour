@@ -12,15 +12,24 @@
   <form class="create-board">
     <div>
       <h2>Chess Board</h2>
-      <label for="width">Width:</label>
-      <input type="number" name="board" id="width" value="8" min="3" max="50">
-      <label for="height">Height:</label>
-      <input type="number" name="board" id="height" value="8" min="3" max="50">
+      <div class="width">
+        <label for="width">Width:</label>
+        <input type="number" id="width" value="8" disabled>
+        <input class="up" type="button" value="Up">
+        <input class="down" type="button" value="Down">
+      </div>
+
+      <div class="height">
+        <label for="height">Height:</label>
+        <input type="number" id="height" value="8" disabled>
+        <input class="up" type="button" value="Up">
+        <input class="down" type="button" value="Down">
+      </div>
     </div>
   </form>
 
   <div id="app"></div>
-  
+
   <script type="module" src="js/controller.js"></script>
 </body>
 

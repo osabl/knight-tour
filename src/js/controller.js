@@ -7,6 +7,16 @@ const input = {
   width: document.querySelector('#width'),
   height: document.querySelector('#height')
 }
+const buttons = {
+  width: {
+    up: document.querySelector('.width .up'),
+    down: document.querySelector('.width .down')
+  },
+  height: {
+    up: document.querySelector('.height .up'),
+    down: document.querySelector('.height .down')
+  }
+}
 
 const viewBoard = new View(app, {
   rows: input.height.value,
