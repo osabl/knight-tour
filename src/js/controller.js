@@ -71,16 +71,44 @@ viewBoard.canvas.addEventListener('click', handlerStart)
   -------------
 */
 
-function changeSize(prop, value) {
-  return () => {
-    chessBoard.clearTable()
-    chessBoard[prop] = input[value].value
-    chessBoard.fillTable()
+function up(input) {
+  input.value++
+}
 
-    viewBoard.clearBoard()
-    viewBoard[prop] = input[value].value
-    viewBoard.renderBoard()
+function down(input) {
+  input.value--
+}
+
+function setLimits(thisElem, thatELem, max) {
+  let flag = false
+  const firstMin = 3
+  const secondMin = 4
+
+  if (thatELem.value == firstMin) {
+    flag = true
   }
+
+  if (thisElem.value < firstMin || (flag === true && thisElem.value < secondMin)) {
+    if (flag === false) {
+      thisElem.value = firstMin
+      flag = true
+    } else {
+      thisElem.value = secondMin
+    }
+  }
+  if (thisElem.value > max) {
+    thisElem.value = max
+  }
+}
+
+function changeSize(propName, value) {
+  chessBoard.clearTable()
+  chessBoard[propName] = value
+  chessBoard.fillTable()
+
+  view.clearBoard()
+  view[propName] = value
+  view.renderBoard()
 }
 
 function handlerStart(event) {
