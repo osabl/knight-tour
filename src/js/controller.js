@@ -18,7 +18,7 @@ const buttons = {
   }
 }
 
-const viewBoard = new View(app, {
+const view = new View(app, {
   rows: input.height.value,
   colums: input.width.value,
   resolution: 1000
@@ -34,7 +34,6 @@ const chessBoard = new ChessBoard({
   -------------
 */
 
-const status = document.createElement('div')
 const tryAgainBtn = document.createElement('button')
 tryAgainBtn.className = 'try-again'
 tryAgainBtn.innerText = 'try again'
@@ -43,14 +42,15 @@ tryAgainBtn.addEventListener('click', () => {
   chessBoard.way = []
   chessBoard.fillTable()
 
-  viewBoard.clearBoard()
-  viewBoard.renderBoard()
+  view.clearBoard()
+  view.renderBoard()
 
-  viewBoard.canvas.addEventListener('click', handlerStart)
+  view.canvas.addEventListener('click', handlerStart)
   input.width.disabled = false
   input.height.disabled = false
 
-  status.remove()
+  view.status.innerText = 'Click on the cell from which you want to start the tour.'
+  view.status.className = 'status initial'
   tryAgainBtn.remove()
 })
 
@@ -86,7 +86,7 @@ buttons.height.down.addEventListener('click', () => {
   changeSize('rows', input.height.value)
 })
 
-viewBoard.canvas.addEventListener('click', handlerStart)
+view.canvas.addEventListener('click', handlerStart)
 
 /* 
   -------------
@@ -135,17 +135,17 @@ function changeSize(propName, value) {
 }
 
 function handlerStart(event) {
-  const coord = getCursorPosition(viewBoard.canvas, event)
-  const relativeCoord = viewBoard.getSelectedCell(coord.x, coord.y)
+  const coord = getCursorPosition(view.canvas, event)
+  const relativeCoord = view.getSelectedCell(coord.x, coord.y)
   const knight = new Knight(chessBoard, relativeCoord)
 
-  viewBoard.canvas.removeEventListener('click', handlerStart)
+  view.canvas.removeEventListener('click', handlerStart)
 
   input.width.disabled = true
   input.height.disabled = true
 
-  status.innerText = 'Finding way... Please wait!'
-  app.append(status)
+  view.status.innerText = 'Finding way... Please wait!'
+  view.status.className = 'status finding'
 
   new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -154,11 +154,18 @@ function handlerStart(event) {
     })
   }).then(() => {
     if (chessBoard.way.length > 0) {
-      status.remove()
-      viewBoard.renderWay(chessBoard.way).then(() => app.append(tryAgainBtn))
+      view.status.innerText = "Drawing a found knight's way..."
+      view.status.className = 'status drawing'
+      view.renderWay(chessBoard.way).then(() => {
+        view.status.innerText = 'Done! The knight has found his way.'
+        view.status.className = 'status success'
+
+        app.append(tryAgainBtn)
+      })
     } else {
-      status.innerText = `It's impossible to find a way out of these coordinates. 
+      view.status.innerText = `It's impossible to find a way out of these coordinates. 
       Try another cell or other chessboard size.`
+      view.status.className = 'status failed'
       app.append(tryAgainBtn)
     }
   })
