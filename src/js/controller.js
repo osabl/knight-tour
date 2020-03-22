@@ -60,8 +60,31 @@ tryAgainBtn.addEventListener('click', () => {
   -------------
 */
 
-input.width.addEventListener('input', changeSize('colums', 'width'))
-input.height.addEventListener('input', changeSize('rows', 'height'))
+// input.width.addEventListener('input', () => setLimits(input.width, input.height, 50))
+// input.height.addEventListener('input', () => setLimits(input.height, input.width, 50))
+// input.width.addEventListener('input', () => changeSize('colums', input.width.value))
+// input.height.addEventListener('input', () => changeSize('rows', input.height.value))
+
+buttons.width.up.addEventListener('click', () => {
+  up(input.width)
+  setLimits(input.width, input.height, 50)
+  changeSize('colums', input.width.value)
+})
+buttons.width.down.addEventListener('click', () => {
+  down(input.width)
+  setLimits(input.width, input.height, 50)
+  changeSize('colums', input.width.value)
+})
+buttons.height.up.addEventListener('click', () => {
+  up(input.height)
+  setLimits(input.height, input.width, 50)
+  changeSize('rows', input.height.value)
+})
+buttons.height.down.addEventListener('click', () => {
+  down(input.height)
+  setLimits(input.height, input.width, 50)
+  changeSize('rows', input.height.value)
+})
 
 viewBoard.canvas.addEventListener('click', handlerStart)
 
