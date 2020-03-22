@@ -5,8 +5,13 @@ export default class View {
     this.canvas.width = this.canvas.height = options.resolution
     this.colums = options.colums
     this.rows = options.rows
+    
+    this.status = document.createElement('h3')
+    this.status.innerText = 'Click on the cell from which you want to start the tour.'
+    this.status.className = 'status initial'
 
     this.renderBoard()
+    element.append(this.status)
     element.append(this.canvas)
   }
 
