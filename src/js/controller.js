@@ -15,7 +15,8 @@ const buttons = {
   height: {
     up: document.querySelector('.height .up'),
     down: document.querySelector('.height .down')
-  }
+  },
+  tryAgain: document.querySelector('.try-again')
 }
 
 const view = new View(app, {
@@ -30,40 +31,9 @@ const chessBoard = new ChessBoard({
 
 /* 
   -------------
-    DOM Elements
-  -------------
-*/
-
-const tryAgainBtn = document.createElement('button')
-tryAgainBtn.className = 'try-again'
-tryAgainBtn.innerText = 'try again'
-tryAgainBtn.addEventListener('click', () => {
-  chessBoard.clearTable()
-  chessBoard.way = []
-  chessBoard.fillTable()
-
-  view.clearBoard()
-  view.renderBoard()
-
-  view.canvas.addEventListener('click', handlerStart)
-  input.width.disabled = false
-  input.height.disabled = false
-
-  view.status.innerText = 'Click on the cell from which you want to start the tour.'
-  view.status.className = 'status initial'
-  tryAgainBtn.remove()
-})
-
-/* 
-  -------------
     Listeners
   -------------
 */
-
-// input.width.addEventListener('input', () => setLimits(input.width, input.height, 50))
-// input.height.addEventListener('input', () => setLimits(input.height, input.width, 50))
-// input.width.addEventListener('input', () => changeSize('colums', input.width.value))
-// input.height.addEventListener('input', () => changeSize('rows', input.height.value))
 
 buttons.width.up.addEventListener('click', () => {
   up(input.width)
@@ -84,6 +54,21 @@ buttons.height.down.addEventListener('click', () => {
   down(input.height)
   setLimits(input.height, input.width, 50)
   changeSize('rows', input.height.value)
+})
+
+buttons.tryAgain.addEventListener('click', (event) => {
+  event.preventDefault()
+
+  chessBoard.clearTable()
+  chessBoard.way = []
+  chessBoard.fillTable()
+
+  view.clearBoard()
+  view.renderBoard()
+
+  view.canvas.addEventListener('click', handlerStart)
+
+  view.phase = 'init'
 })
 
 view.canvas.addEventListener('click', handlerStart)
@@ -144,8 +129,7 @@ function handlerStart(event) {
   input.width.disabled = true
   input.height.disabled = true
 
-  view.status.innerText = 'Finding way... Please wait!'
-  view.status.className = 'status finding'
+  view.phase = 'finding'
 
   new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -154,19 +138,12 @@ function handlerStart(event) {
     })
   }).then(() => {
     if (chessBoard.way.length > 0) {
-      view.status.innerText = "Drawing a found knight's way..."
-      view.status.className = 'status drawing'
+      view.phase = 'rendering'
       view.renderWay(chessBoard.way).then(() => {
-        view.status.innerText = 'Done! The knight has found his way.'
-        view.status.className = 'status success'
-
-        app.append(tryAgainBtn)
+        view.phase = 'success'
       })
     } else {
-      view.status.innerText = `It's impossible to find a way out of these coordinates. 
-      Try another cell or other chessboard size.`
-      view.status.className = 'status failed'
-      app.append(tryAgainBtn)
+      view.phase = 'failed'
     }
   })
 }

@@ -1,18 +1,50 @@
 export default class View {
   constructor (element, options) {
     this.canvas = document.createElement('canvas')
-    this.canvas.className = 'chessboard'
     this.canvas.width = this.canvas.height = options.resolution
     this.colums = options.colums
     this.rows = options.rows
     
     this.status = document.createElement('h3')
-    this.status.innerText = 'Click on the cell from which you want to start the tour.'
-    this.status.className = 'status initial'
+    this.phase = 'init'
 
     this.renderBoard()
     element.append(this.status)
     element.append(this.canvas)
+  }
+
+  set phase (phase) {
+    switch (phase) {
+      case 'init':
+        this.canvas.className = 'chessboard initial'
+        this.status.innerText = 'Click on the cell from which you want to start the tour.'
+        this.status.className = 'status initial'
+        break
+      case 'finding':
+        this.canvas.className = 'chessboard finding'
+        this.status.innerText = 'Finding way... Please wait!'
+        this.status.className = 'status finding'
+        break
+      case 'rendering':
+        this.canvas.className = 'chessboard drawing'
+        this.status.innerText = "Drawing a found knight's way..."
+        this.status.className = 'status drawing'
+        break
+      case 'success':
+        this.canvas.className = 'chessboard success'
+        this.status.innerText = 'Done! The knight has found his way.'
+        this.status.className = 'status success'
+        break
+      case 'failed':
+        this.canvas.className = 'chessboard failed'
+        this.status.innerText = `It's impossible to find a way out of these coordinates. 
+        Try another cell or other chessboard size.`
+        this.status.className = 'status failed'
+        break
+      default:
+        this.status.innerText = `${phase}`
+        break
+    }
   }
 
   renderBoard () {
