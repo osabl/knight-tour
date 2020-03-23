@@ -69,6 +69,12 @@ buttons.tryAgain.addEventListener('click', (event) => {
   view.canvas.addEventListener('click', handlerStart)
 
   view.phase = 'init'
+
+  buttons.tryAgain.disabled = true
+  buttons.width.up.disabled = false
+  buttons.width.down.disabled = false
+  buttons.height.up.disabled = false
+  buttons.height.down.disabled = false
 })
 
 view.canvas.addEventListener('click', handlerStart)
@@ -126,8 +132,10 @@ function handlerStart(event) {
 
   view.canvas.removeEventListener('click', handlerStart)
 
-  input.width.disabled = true
-  input.height.disabled = true
+  buttons.width.up.disabled = true
+  buttons.width.down.disabled = true
+  buttons.height.up.disabled = true
+  buttons.height.down.disabled = true
 
   view.phase = 'finding'
 
@@ -141,9 +149,11 @@ function handlerStart(event) {
       view.phase = 'rendering'
       view.renderWay(chessBoard.way).then(() => {
         view.phase = 'success'
+        buttons.tryAgain.disabled = false
       })
     } else {
       view.phase = 'failed'
+      buttons.tryAgain.disabled = false
     }
   })
 }
