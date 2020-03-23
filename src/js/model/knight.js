@@ -3,23 +3,22 @@ export default class Knight {
     this.x = 0
     this.y = 0
     this.board = board
+    this.movement = {
+      UL: { x: -1, y:  2, description: 'up left'    },
+      UR: { x:  1, y:  2, description: 'up right'   },
+      RU: { x:  2, y:  1, description: 'right up'   },
+      RD: { x:  2, y: -1, description: 'right down' },
+      DR: { x:  1, y: -2, description: 'down right' },
+      DL: { x: -1, y: -2, description: 'down left'  },
+      LD: { x: -2, y: -1, description: 'left down'  },
+      LU: { x: -2, y:  1, description: 'left up'    },
+    }
 
     if (board.colums >= options.x && board.rows >= options.y) {
       this.move({ x: Number(options.x), y: Number(options.y), description: 'start position' })
     } else {
       throw new Error('The value of the coordinates went beyond the border of the board.')
     }
-  }
-
-  static movement = {
-    UL: { x: -1, y:  2, description: 'up left'    },
-    UR: { x:  1, y:  2, description: 'up right'   },
-    RU: { x:  2, y:  1, description: 'right up'   },
-    RD: { x:  2, y: -1, description: 'right down' },
-    DR: { x:  1, y: -2, description: 'down right' },
-    DL: { x: -1, y: -2, description: 'down left'  },
-    LD: { x: -2, y: -1, description: 'left down'  },
-    LU: { x: -2, y:  1, description: 'left up'    },
   }
 
   move ({ x, y, description }) {

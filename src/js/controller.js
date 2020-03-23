@@ -193,7 +193,7 @@ function findWay(knight) {
 }
 
 function getOptimalMovement(knight) {
-  let possibleMoves = knight.board.getPossibleMoves(Knight.movement, knight.x, knight.y)
+  let possibleMoves = knight.board.getPossibleMoves(knight.movement, knight.x, knight.y)
 
   possibleMoves.sort((moveA, moveB) => {
     const xA = knight.x + moveA.x
@@ -201,8 +201,8 @@ function getOptimalMovement(knight) {
     const xB = knight.x + moveB.x
     const yB = knight.y + moveB.y
 
-    const a = knight.board.getPossibleMoves(Knight.movement, xA, yA).length
-    const b = knight.board.getPossibleMoves(Knight.movement, xB, yB).length
+    const a = knight.board.getPossibleMoves(knight.movement, xA, yA).length
+    const b = knight.board.getPossibleMoves(knight.movement, xB, yB).length
 
     return a - b
   })
