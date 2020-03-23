@@ -50,11 +50,12 @@ export default class View {
   renderBoard () {
     const ctx = this.canvas.getContext('2d')
     const size = this.canvas.width / (Number(this.colums) > Number(this.rows) ? this.colums : this.rows)
+    const alignMiddle = (this.canvas.width - (size * this.colums)) / 2
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.colums; j++) {
         ctx.fillStyle = (i + j) % 2 ? '#B58863' : '#F0D9B5' // even or odd
-        ctx.fillRect(j * size, i * size, size, size)
+        ctx.fillRect(j * size + alignMiddle, i * size, size, size)
       }
     }
   }
@@ -68,6 +69,7 @@ export default class View {
     const ctx = this.canvas.getContext('2d')
     const size = this.canvas.width / (Number(this.colums) > Number(this.rows) ? this.colums : this.rows)
     const radius = size / 4
+    const alignMiddle = (this.canvas.width - (size * this.colums)) / 2
     ctx.lineWidth = size / 30
     ctx.font = `${size / 4}px Roboto, Arial, Helvetica, sans-serif`
     ctx.textAlign = 'center'
@@ -81,28 +83,28 @@ export default class View {
           ctx.fillStyle = i === 1 ? 'red' : 'black'
 
           ctx.beginPath()
-          ctx.moveTo((way[i - 1].x * size) + size / 2, (way[i - 1].y * size) + size / 2)
-          ctx.lineTo((way[i].x * size) + size / 2, (way[i].y * size) + size / 2)
+          ctx.moveTo((way[i - 1].x * size) + size / 2 + alignMiddle, (way[i - 1].y * size) + size / 2)
+          ctx.lineTo((way[i].x * size) + size / 2 + alignMiddle, (way[i].y * size) + size / 2)
           ctx.stroke()
           ctx.closePath()
   
           ctx.beginPath()
-          ctx.arc((way[i - 1].x * size) + size / 2, (way[i - 1].y * size) + size / 2, radius, 0, Math.PI * 2)
+          ctx.arc((way[i - 1].x * size) + size / 2 + alignMiddle, (way[i - 1].y * size) + size / 2, radius, 0, Math.PI * 2)
           ctx.fill()
           ctx.closePath()
   
           ctx.fillStyle = 'green'
 
           ctx.beginPath()
-          ctx.arc((way[i].x * size) + size / 2, (way[i].y * size) + size / 2, radius, 0, Math.PI * 2)
+          ctx.arc((way[i].x * size) + size / 2 + alignMiddle, (way[i].y * size) + size / 2, radius, 0, Math.PI * 2)
           ctx.fill()
           ctx.closePath()
 
           ctx.fillStyle = 'white'
 
           ctx.beginPath()
-          ctx.fillText(`${i - 1}`, (way[i - 1].x * size) + size / 2, (way[i - 1].y * size) + size / 2, size / 2)
-          ctx.fillText(`${i}`, (way[i].x * size) + size / 2, (way[i].y * size) + size / 2, size / 2)
+          ctx.fillText(`${i - 1}`, (way[i - 1].x * size) + size / 2 + alignMiddle, (way[i - 1].y * size) + size / 2, size / 2)
+          ctx.fillText(`${i}`, (way[i].x * size) + size / 2 + alignMiddle, (way[i].y * size) + size / 2, size / 2)
           ctx.closePath()
 
           resolve()
@@ -114,11 +116,10 @@ export default class View {
   }
 
   getSelectedCell (x, y) {
-    const ctx = this.canvas.getContext('2d')
     const size = this.canvas.width / (Number(this.colums) > Number(this.rows) ? this.colums : this.rows)
-    const radius = size / 4
+    const alignMiddle = (this.canvas.width - (size * this.colums)) / 2
 
-    const newX = Math.floor(x / size)
+    const newX = Math.floor((x - alignMiddle) / size)
     const newY = Math.floor(y / size)
     return { x: newX, y: newY }
   }
