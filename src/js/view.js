@@ -37,6 +37,9 @@ export default class View {
     const size = this.canvas.width / (Number(this.colums) > Number(this.rows) ? this.colums : this.rows)
     const radius = size / 4
     ctx.lineWidth = size / 30
+    ctx.font = `${size / 4}px Roboto, Arial, Helvetica, sans-serif`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
 
     const promises = []
 
@@ -44,7 +47,7 @@ export default class View {
       promises.push(new Promise((resolve, reject) => {
         setTimeout(() => {
           ctx.fillStyle = i === 1 ? 'red' : 'black'
-  
+
           ctx.beginPath()
           ctx.moveTo((way[i - 1].x * size) + size / 2, (way[i - 1].y * size) + size / 2)
           ctx.lineTo((way[i].x * size) + size / 2, (way[i].y * size) + size / 2)
@@ -57,10 +60,17 @@ export default class View {
           ctx.closePath()
   
           ctx.fillStyle = 'green'
-  
+
           ctx.beginPath()
           ctx.arc((way[i].x * size) + size / 2, (way[i].y * size) + size / 2, radius, 0, Math.PI * 2)
           ctx.fill()
+          ctx.closePath()
+
+          ctx.fillStyle = 'white'
+
+          ctx.beginPath()
+          ctx.fillText(`${i - 1}`, (way[i - 1].x * size) + size / 2, (way[i - 1].y * size) + size / 2, size / 2)
+          ctx.fillText(`${i}`, (way[i].x * size) + size / 2, (way[i].y * size) + size / 2, size / 2)
           ctx.closePath()
 
           resolve()
