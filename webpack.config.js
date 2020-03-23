@@ -14,9 +14,7 @@ const PATHS = {
 
 module.exports = {
   devtool: isDevMode ? 'eval-cheap-module-source-map' : 'none',
-  entry: {
-    index: `${PATHS.src}/index.js`
-  },
+  entry: ['babel-polyfill', `${PATHS.src}/index.js`],
   output: {
     filename: isDevMode ? 'js/[name].js' : 'js/[name].[hash].js',
     path: PATHS.dist,
