@@ -80,7 +80,7 @@ export default class View {
     for (let i = 1; i < way.length; i++) {
       promises.push(new Promise((resolve, reject) => {
         setTimeout(() => {
-          ctx.fillStyle = i === 1 ? 'red' : 'black'
+          ctx.fillStyle = i === 1 ? '#d64f00' : '#3A3A3A'
 
           ctx.beginPath()
           ctx.moveTo((way[i - 1].x * size) + size / 2 + alignMiddle, (way[i - 1].y * size) + size / 2)
@@ -92,7 +92,7 @@ export default class View {
           ctx.arc((way[i - 1].x * size) + size / 2 + alignMiddle, (way[i - 1].y * size) + size / 2, radius, 0, Math.PI * 2)
           ctx.fill()
           ctx.closePath()
-  
+
           ctx.fillStyle = 'green'
 
           ctx.beginPath()
