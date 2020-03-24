@@ -67,6 +67,8 @@ buttons.tryAgain.addEventListener('click', (event) => {
   view.renderBoard()
 
   view.canvas.addEventListener('click', handlerStart)
+  view.canvas.addEventListener('mousemove', handlerMouseMove)
+  view.canvas.addEventListener('mouseout', handlerMouseOut)
 
   view.phase = 'init'
 
@@ -78,6 +80,8 @@ buttons.tryAgain.addEventListener('click', (event) => {
 })
 
 view.canvas.addEventListener('click', handlerStart)
+view.canvas.addEventListener('mousemove', handlerMouseMove)
+view.canvas.addEventListener('mouseout', handlerMouseOut)
 
 /* 
   -------------
@@ -127,10 +131,12 @@ function changeSize(propName, value) {
 
 function handlerStart(event) {
   const coord = getCursorPosition(view.canvas, event)
-  const relativeCoord = view.getSelectedCell(coord.x, coord.y)
-  const knight = new Knight(chessBoard, relativeCoord)
+  const cellCoord = view.getSelectedCell(coord.x, coord.y)
+  const knight = new Knight(chessBoard, cellCoord)
 
   view.canvas.removeEventListener('click', handlerStart)
+  view.canvas.removeEventListener('mousemove', handlerMouseMove)
+  view.canvas.removeEventListener('mouseout', handlerMouseOut)
 
   buttons.width.up.disabled = true
   buttons.width.down.disabled = true
@@ -147,6 +153,8 @@ function handlerStart(event) {
   }).then(() => {
     if (chessBoard.way.length > 0) {
       view.phase = 'rendering'
+      view.clearBoard()
+      view.renderBoard()
       view.renderWay(chessBoard.way).then(() => {
         view.phase = 'success'
         buttons.tryAgain.disabled = false
@@ -156,6 +164,20 @@ function handlerStart(event) {
       buttons.tryAgain.disabled = false
     }
   })
+}
+
+function handlerMouseMove(event) {
+  const coord = getCursorPosition(view.canvas, event)
+  const cellCoord = view.getSelectedCell(coord.x, coord.y)
+
+  view.clearBoard()
+  view.renderBoard()
+  view.renderSelectedCell(cellCoord.x, cellCoord.y)
+}
+
+function handlerMouseOut(event) {
+  view.clearBoard()
+  view.renderBoard()
 }
 
 /* 

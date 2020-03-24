@@ -115,7 +115,23 @@ export default class View {
     await Promise.all(promises)
   }
 
-  getSelectedCell (x, y) {
+  renderSelectedCell(x, y) {
+    if (0 > x || x >= this.colums 
+      || 0 > y || y >= this.rows) {
+      return
+    }
+    const ctx = this.canvas.getContext('2d')
+    const size = this.canvas.width / (Number(this.colums) > Number(this.rows) ? this.colums : this.rows)
+    const alignMiddle = (this.canvas.width - (size * this.colums)) / 2
+
+    ctx.fillStyle = '#d64f00'
+
+    ctx.beginPath()
+    ctx.fillRect(x * size + alignMiddle, y * size, size, size)
+    ctx.closePath()
+  }
+
+  getSelectedCell(x, y) {
     const size = this.canvas.width / (Number(this.colums) > Number(this.rows) ? this.colums : this.rows)
     const alignMiddle = (this.canvas.width - (size * this.colums)) / 2
 
