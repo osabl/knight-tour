@@ -89,15 +89,15 @@ view.canvas.addEventListener('mouseout', handlerMouseOut)
   -------------
 */
 
-function up(input) {
+function up (input) {
   input.value++
 }
 
-function down(input) {
+function down (input) {
   input.value--
 }
 
-function setLimits(thisElem, thatELem, max) {
+function setLimits (thisElem, thatELem, max) {
   let flag = false
   const firstMin = 3
   const secondMin = 4
@@ -119,7 +119,7 @@ function setLimits(thisElem, thatELem, max) {
   }
 }
 
-function changeSize(propName, value) {
+function changeSize (propName, value) {
   chessBoard.clearTable()
   chessBoard[propName] = value
   chessBoard.fillTable()
@@ -129,7 +129,7 @@ function changeSize(propName, value) {
   view.renderBoard()
 }
 
-function handlerStart(event) {
+function handlerStart (event) {
   const coord = getCursorPosition(view.canvas, event)
   const cellCoord = view.getSelectedCell(coord.x, coord.y)
   const knight = new Knight(chessBoard, cellCoord)
@@ -166,7 +166,7 @@ function handlerStart(event) {
   })
 }
 
-function handlerMouseMove(event) {
+function handlerMouseMove (event) {
   const coord = getCursorPosition(view.canvas, event)
   const cellCoord = view.getSelectedCell(coord.x, coord.y)
 
@@ -175,7 +175,7 @@ function handlerMouseMove(event) {
   view.renderSelectedCell(cellCoord.x, cellCoord.y)
 }
 
-function handlerMouseOut(event) {
+function handlerMouseOut (event) {
   view.clearBoard()
   view.renderBoard()
 }
@@ -186,7 +186,7 @@ function handlerMouseOut(event) {
   -------------
 */
 
-function getCursorPosition(canvas, event) {
+function getCursorPosition (canvas, event) {
   const rect = canvas.getBoundingClientRect()
   const ratio = canvas.width / (rect.right - rect.left)
   const x = (event.clientX - rect.left) * ratio
@@ -197,7 +197,7 @@ function getCursorPosition(canvas, event) {
   }
 }
 
-function findWay(knight) {
+function findWay (knight) {
   const movement = getOptimalMovement(knight)
 
   for (const move of movement) {
@@ -214,7 +214,7 @@ function findWay(knight) {
   }
 }
 
-function getOptimalMovement(knight) {
+function getOptimalMovement (knight) {
   let possibleMoves = knight.board.getPossibleMoves(knight.movement, knight.x, knight.y)
 
   possibleMoves.sort((moveA, moveB) => {

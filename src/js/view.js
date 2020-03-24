@@ -4,7 +4,7 @@ export default class View {
     this.canvas.width = this.canvas.height = options.resolution
     this.colums = options.colums
     this.rows = options.rows
-    
+
     this.status = document.createElement('h3')
     this.phase = 'init'
 
@@ -55,12 +55,15 @@ export default class View {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.colums; j++) {
         ctx.fillStyle = (i + j) % 2 ? '#B58863' : '#F0D9B5' // even or odd
+        
+        ctx.beginPath()
         ctx.fillRect(j * size + alignMiddle, i * size, size, size)
+        ctx.closePath()
       }
     }
   }
 
-  clearBoard() {
+  clearBoard () {
     const ctx = this.canvas.getContext('2d')
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
@@ -87,13 +90,13 @@ export default class View {
           ctx.lineTo((way[i].x * size) + size / 2 + alignMiddle, (way[i].y * size) + size / 2)
           ctx.stroke()
           ctx.closePath()
-  
+
           ctx.beginPath()
           ctx.arc((way[i - 1].x * size) + size / 2 + alignMiddle, (way[i - 1].y * size) + size / 2, radius, 0, Math.PI * 2)
           ctx.fill()
           ctx.closePath()
 
-          ctx.fillStyle = 'green'
+          ctx.fillStyle = '#71B33E'
 
           ctx.beginPath()
           ctx.arc((way[i].x * size) + size / 2 + alignMiddle, (way[i].y * size) + size / 2, radius, 0, Math.PI * 2)
@@ -115,7 +118,7 @@ export default class View {
     await Promise.all(promises)
   }
 
-  renderSelectedCell(x, y) {
+  renderSelectedCell (x, y) {
     if (0 > x || x >= this.colums 
       || 0 > y || y >= this.rows) {
       return
@@ -131,12 +134,13 @@ export default class View {
     ctx.closePath()
   }
 
-  getSelectedCell(x, y) {
+  getSelectedCell (x, y) {
     const size = this.canvas.width / (Number(this.colums) > Number(this.rows) ? this.colums : this.rows)
     const alignMiddle = (this.canvas.width - (size * this.colums)) / 2
 
-    const newX = Math.floor((x - alignMiddle) / size)
-    const newY = Math.floor(y / size)
-    return { x: newX, y: newY }
+    return {
+      x: Math.floor((x - alignMiddle) / size),
+      y: Math.floor(y / size)
+    }
   }
 }
