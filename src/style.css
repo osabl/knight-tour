@@ -88,6 +88,10 @@ body {
   max-width: 33em;
 }
 
+.chessboard.initial {
+  cursor: pointer;
+}
+
 .chessboard.drawing {
   cursor: progress;
 }
